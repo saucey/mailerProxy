@@ -26,7 +26,6 @@ app.use((req, res, next) => {
 
 
 app.post('/api/proxy', async (req, res) => {
-  console.log('Received data:', req.body);
   try {
     // Make sure MAILER_API_URL and SECRET_KEY are set in your .env
     const response = await fetch(process.env.MAILER_API_URL, {
