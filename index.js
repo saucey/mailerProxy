@@ -12,15 +12,17 @@ const PORT = 4000;
 app.use(cors());
 app.use(express.json());
 
-const whoCanAccess = process.env.WHO_CAN_ACCESS
+const allowedOrigins = process.env.WHO_CAN_ACCESS?.split(',').map(origin => origin.trim());
 
 app.use((req, res, next) => {
   const origin = req.get('origin');
   console.log('Origin:', origin);
-  console.log('coming:', whoCanAccess);
-  if (origin !== whoCanAccess) {
+  console.log('Allowed:', allowedOrigins);
+
+  if (!origin || !allowedOrigins.includes(origin)) {
     return res.status(403).json({ error: 'Forbidden' });
   }
+
   next();
 });
 
